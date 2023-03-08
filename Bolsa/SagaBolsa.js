@@ -1,4 +1,4 @@
-const { Builder, By, Key, Select, assert, ok } = require('selenium-webdriver');
+const { Builder, By, Key, Select, Promise,until } = require('selenium-webdriver');
 const chromedriver = require('chromedriver');
 
 let chrome = require('selenium-webdriver/chrome');
@@ -37,8 +37,6 @@ async function run() {
     //     return false;
 
     // }
-
-        
 
     var errors = [];
 
@@ -120,7 +118,7 @@ async function run() {
         await select.selectByIndex(1);
 
         const desc = await driver.findElement(By.name('frm_descricao'));
-        await desc.sendKeys('teste');
+        await desc.sendKeys('teste3');
         await desc.sendKeys(Key.ENTER);
         log_funcionalidade = 'Inclusão de motivos de bolsa';
         log_resultado = 'Passou';
@@ -142,7 +140,7 @@ async function run() {
     try {
         //pesquisar elemento criado na tela de cadastro de bolsa
         const pesquisa = await driver.findElement(By.name('pesquisa'));
-        await pesquisa.sendKeys('teste');
+        await pesquisa.sendKeys('teste3');
         await pesquisa.sendKeys(Key.ENTER);
         log_funcionalidade = 'Pesquisa do elemento criado';
         log_resultado = 'Passou';
@@ -157,11 +155,66 @@ async function run() {
         if (err) throw err;
     });
 
-    setTimeout(async () => {
-  
-        await driver.quit();
-        },
-        30000);
+
+    //modificadores de bolsas
+    try {
+        const bolsa = await driver.findElement(By.xpath('/html/body/table/tbody/tr[2]/td/form/table/tbody/tr/td[1]/ul/li[1]/div'));
+        await bolsa.click();
+
+        const cadastro = await driver.findElement(By.xpath('/html/body/table/tbody/tr[2]/td/form/table/tbody/tr/td[1]/ul/li[1]/ul/li[1]/div'));
+        await cadastro.click();
+
+        const mod_bolsas = await driver.findElement(By.xpath('/html/body/table/tbody/tr[2]/td/form/table/tbody/tr/td[1]/ul/li[1]/ul/li[1]/ul/li[4]/a/div'));
+        await mod_bolsas.click();
+
+        const incluir_mod = await driver.findElement(By.xpath('//*[@id="frmGrid"]/table/tbody/tr[1]/td/table/tbody/tr/td[2]'));
+        await incluir_mod.click();
+        
+        const element = await driver.wait(until.elementLocated(By.name('dados[label]')), 5000);
+        
+        await element.sendKeys('100000');
+        
+
+        const nome = await driver.findElement(By.name('dados[nome]'));
+        await nome.sendKeys('unisuam');
+
+        const categoria = await driver.findElement(By.name('dados[categoria]'));
+        await categoria.click();
+
+        let select = new Select(categoria);
+        await select.selectByIndex(6);
+
+        const confirmar = await driver.findElement(By.name('btnConfirmar'));
+        await confirmar.click();
+        const confirmar_inclusao = await driver.wait(until.elementLocated(By.className('ok_button')), 10000);
+        
+        await confirmar_inclusao.click();
+
+        const cancelar = await driver.findElement(By.name('btnCancelar'));
+        await cancelar.click();
+
+    } catch (error) {
+        console.log(error)
+    }
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -173,5 +226,6 @@ async function run() {
 
 
 }
+
 
 run();
