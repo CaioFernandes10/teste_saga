@@ -16,13 +16,20 @@ const { type } = require('os');
 let driver = chrome.Driver.createSession(options, service);
 
 async function run() {
+    const path = require('path');
+    var fs = require('fs');
     var nome = require('../Funcoes/index.js').nome;
     var escreverRelatorio = require('../Funcoes/index.js').escreverRelatorio;
     var nome_formado = nome();
+    const downloadDir = '/home/caiofernandes/Downloads'; // diretório de download
+    const chrome = require('selenium-webdriver/chrome');
+    const options = new chrome.Options();
 
-    var log_funcionalidade = '';
-    var log_resultado = '';
-    var log_erro = '';
+    options.setUserPreferences({
+        'download.default_directory': downloadDir,
+        'download.prompt_for_download': false,
+        'download.directory_upgrade': true
+    });
 
     let driver = await new Builder().forBrowser('chrome').build();
 
@@ -35,29 +42,29 @@ async function run() {
         await senha.sendKeys('123456');
         await senha.sendKeys(Key.ENTER);
         log_funcionalidade = 'tela de login';
-        log_resultado = 'Passou';
+        log_resultado = 'Sucesso';
         log_erro = ''
     } catch (error) {
         log_funcionalidade = 'tela de login';
-        log_resultado = 'Nao Passou';
+        log_resultado = 'Falhou1';
         log_erro = 'Erro ao acessar a tela de login';
     }
     escreverRelatorio(nome_formado, log_funcionalidade, log_resultado, log_erro);
-    
+
     try {
         //tela de graduacao    
         const gra = await driver.findElement(By.xpath('/html/body/table/tbody/tr[1]/td/table[2]/tbody/tr[1]/td/table/tbody/tr/td[13]/a'))
         await gra.click();
         log_funcionalidade = 'tela de graduacao';
-        log_resultado = 'Passou';
+        log_resultado = 'Sucesso';
         log_erro = ''
     } catch (error) {
         log_funcionalidade = 'tela de graduacao';
-        log_resultado = 'Nao Passou';
+        log_resultado = 'Falhou1';
         log_erro = 'Erro ao clikar no botao de Graduacao';
     }
     escreverRelatorio(nome_formado, log_funcionalidade, log_resultado, log_erro);
-
+    
 
     try {
         //bolsa>cadastro>cadastro de motivos
@@ -70,12 +77,12 @@ async function run() {
         const cadastro_motivos = await driver.findElement(By.xpath('/html/body/table/tbody/tr[2]/td/form/table/tbody/tr/td[1]/ul/li[1]/ul/li[1]/ul/li[1]/a/div'));
         await cadastro_motivos.click();
         log_funcionalidade = 'Cadastro de motivos para bolsa';
-        log_resultado = 'Passou';
+        log_resultado = 'Sucesso';
         log_erro = ''
 
     } catch (error) {
         log_funcionalidade = 'Cadastro de motivos para bolsa';
-        log_resultado = 'Nao Passou';
+        log_resultado = 'Falhou1';
         log_erro = 'Erro ao entrar na tela de Cadastro de motivos para bolsa';
     }
     escreverRelatorio(nome_formado, log_funcionalidade, log_resultado, log_erro);
@@ -94,12 +101,12 @@ async function run() {
         await desc.sendKeys('teste');
         await desc.sendKeys(Key.ENTER);
         log_funcionalidade = 'Inclusão de motivos de bolsa';
-        log_resultado = 'Passou';
+        log_resultado = 'Sucesso';
         log_erro = ''
 
     } catch (error) {
         log_funcionalidade = 'Inclusão de motivos de bolsa';
-        log_resultado = 'Nao Passou';
+        log_resultado = 'Falhou1';
         log_erro = 'Erro na tela de Inclusão de motivos de bolsa';
     }
     escreverRelatorio(nome_formado, log_funcionalidade, log_resultado, log_erro);
@@ -114,11 +121,11 @@ async function run() {
         await pesquisa.sendKeys('teste');
         await pesquisa.sendKeys(Key.ENTER);
         log_funcionalidade = 'Pesquisa do elemento criado';
-        log_resultado = 'Passou';
+        log_resultado = 'Sucesso';
         log_erro = ''
     } catch (error) {
         log_funcionalidade = 'Pesquisa do elemento criado(Cadastro de motivos para bolsa)';
-        log_resultado = 'Nao Passou';
+        log_resultado = 'Falhou1';
         log_erro = 'Erro na pesquisa';
 
     }
@@ -142,11 +149,11 @@ async function run() {
         const confirmacao_alterar = await driver.findElement(By.name('ok'));
         await confirmacao_alterar.click();
         log_funcionalidade = 'alterar cadastro de motivo bolsa';
-        log_resultado = 'Passou';
+        log_resultado = 'Sucesso';
         log_erro = ''
     } catch (error) {
         log_funcionalidade = 'alterar cadastro de motivo bolsa';
-        log_resultado = 'Não Passou';
+        log_resultado = 'Falhou';
         log_erro = 'Erro na tela de alterar cadastro de motivo bolsa'
     }
     escreverRelatorio(nome_formado, log_funcionalidade, log_resultado, log_erro);
@@ -170,12 +177,12 @@ async function run() {
         const confirma_excluir1 = await driver.findElement(By.name('ok'));
         await confirma_excluir1.click();
         log_funcionalidade = 'excluir cadastro de motivo bolsa';
-        log_resultado = 'Passou';
+        log_resultado = 'Sucesso';
         log_erro = ''
 
     } catch (error) {
         log_funcionalidade = 'excluir cadastro de motivo bolsa';
-        log_resultado = 'Não Passou';
+        log_resultado = 'Falhou';
         log_erro = 'Erro na tela de excluir cadastro de motivo bolsa'
     }
 
@@ -192,11 +199,11 @@ async function run() {
         await mod_bolsas.click();
 
         log_funcionalidade = 'modificadores de bolsas';
-        log_resultado = 'Passou';
+        log_resultado = 'Sucesso';
         log_erro = ''
     } catch (error) {
         log_funcionalidade = 'Erro na tela de modificadores de bolsas';
-        log_resultado = 'Não Passou';
+        log_resultado = '';
         log_erro = 'Erro ao entrar na tela de modificadores de bolsas';
     }
     escreverRelatorio(nome_formado, log_funcionalidade, log_resultado, log_erro);
@@ -225,13 +232,13 @@ async function run() {
         const confirmar_inclusao = await driver.wait(until.elementLocated(By.className(' ok_button')), 10000);
         await confirmar_inclusao.click();
         log_funcionalidade = 'inclusao modificadores de bolsas';
-        log_resultado = 'Passou';
+        log_resultado = 'Sucesso';
         log_erro = ''
 
 
     } catch (error) {
         log_funcionalidade = 'inclusao modificadores de bolsas';
-        log_resultado = 'Não Passou';
+        log_resultado = '';
         log_erro = 'Erro ao entrar na tela de inclusao modificadores de bolsas'
     }
     escreverRelatorio(nome_formado, log_funcionalidade, log_resultado, log_erro);
@@ -264,12 +271,12 @@ async function run() {
         await confirmar_inclusao_alterar.click();
 
         log_funcionalidade = 'alterar modificadores de bolsas';
-        log_resultado = 'Passou';
+        log_resultado = 'Sucesso';
         log_erro = '';
 
     } catch (error) {
         log_funcionalidade = 'alterar modificadores de bolsas';
-        log_resultado = 'Não Passou';
+        log_resultado = '';
         log_erro = 'Erro ao entrar na tela de alterar modificadores de bolsas'
     }
     escreverRelatorio(nome_formado, log_funcionalidade, log_resultado, log_erro);
@@ -288,12 +295,12 @@ async function run() {
 
 
         log_funcionalidade = 'excluir modificadores de bolsas';
-        log_resultado = 'Passou';
+        log_resultado = 'Sucesso';
         log_erro = '';
 
     } catch (error) {
         log_funcionalidade = 'excluir modificadores de bolsas';
-        log_resultado = 'Não Passou';
+        log_resultado = '';
         log_erro = 'Erro ao excluir modificadores de bolsas';
     }
     escreverRelatorio(nome_formado, log_funcionalidade, log_resultado, log_erro);
@@ -310,11 +317,11 @@ async function run() {
         await parametro.click();
 
         log_funcionalidade = 'tela de parametros';
-        log_resultado = 'Passou';
+        log_resultado = 'Sucesso';
         log_erro = '';
     } catch (error) {
         log_funcionalidade = 'tela de parametros';
-        log_resultado = 'Não Passou';
+        log_resultado = '';
         log_erro = 'Erro ao entrar na tela de parametros';
     }
     escreverRelatorio(nome_formado, log_funcionalidade, log_resultado, log_erro);
@@ -334,12 +341,12 @@ async function run() {
         const Tabela_Percentual = await driver.findElement(By.xpath('/html/body/table/tbody/tr[2]/td/form/table/tbody/tr/td[1]/ul/li[1]/ul/li[1]/ul/li[6]'));
         await Tabela_Percentual.click();
         log_funcionalidade = 'tela de Tabela Percentual';
-        log_resultado = 'Passou';
+        log_resultado = 'Sucesso';
         log_erro = '';
 
     } catch (error) {
         log_funcionalidade = 'tela de Tabela Percentual';
-        log_resultado = 'Não Passou';
+        log_resultado = '';
         log_erro = 'Erro ao entrar na tela de Tabela Percentual';
     }
 
@@ -361,10 +368,17 @@ async function run() {
         const confirma_modal = await driver.findElement(By.name('ok'));
         await confirma_modal.click()
 
-
+    } catch (error) {
+        log_funcionalidade = 'tela de Tabela Percentual incluir';
+        log_resultado = '';
+        log_erro = 'Erro ao entrar na tela de Tabela Percentual';
+    }
+    escreverRelatorio(nome_formado, log_funcionalidade, log_resultado, log_erro);
+    try {
         const pesquisa_percentual = await driver.findElement(By.name('pesquisa'));
         await pesquisa_percentual.sendKeys('teste');
         await pesquisa_percentual.sendKeys(Key.ENTER);
+
 
         const check_excluir_percentual = await driver.findElement(By.id('check_exclui_0'));
         await check_excluir_percentual.click()
@@ -379,13 +393,102 @@ async function run() {
 
         const confirma_modal_excluir = await driver.wait(until.elementLocated(By.name('ok')), 10000);
         await confirma_modal_excluir.click();
+        log_funcionalidade = 'tela de Tabela Percentual excluir';
+        log_resultado = 'Sucesso';
+        log_erro = '';
 
     } catch (error) {
-
+        log_funcionalidade = 'tela de Tabela Percentual excluir';
+        log_resultado = ' Falhou1';
+        log_erro = 'Erro ao entrar na tela de Tabela Percentual excluir';
     }
+    escreverRelatorio(nome_formado, log_funcionalidade, log_resultado, log_erro);
+    try {
+        //tela de protocolo online   
+        const proto = await driver.findElement(By.xpath('/html/body/table/tbody/tr[1]/td/table[2]/tbody/tr[1]/td/table/tbody/tr/td[20]/a'));
+        await proto.click();
+        log_funcionalidade = 'tela de protocolo por departamento';
+        log_resultado = 'Sucesso';
+        log_erro = ''
+    } catch (error) {
+        log_funcionalidade = 'tela de protocolo por departamento';
+        log_resultado = 'Falhou';
+        log_erro = 'Erro ao clikar no botao de protocolo por departamento';
+    }
+    escreverRelatorio(nome_formado, log_funcionalidade, log_resultado, log_erro);
+    try {
+        const relatorios = await driver.wait(until.elementLocated(By.xpath('/html/body/table/tbody/tr[2]/td/form/table/tbody/tr/td[1]/ul/li[2]/div')), 10000);
+        await relatorios.click();
+    
+        const protocolos_departamento = await driver.findElement(By.xpath('/html/body/table/tbody/tr[2]/td/form/table/tbody/tr/td[1]/ul/li[2]/ul/li[4]/a'));
+        await protocolos_departamento.click();
+    
+        const tipo_requerimento = await driver.wait(until.elementLocated(By.xpath('//*[@id="frm"]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr[1]/td[2]/table/tbody/tr[2]/td[2]/table/tbody/tr[1]/td/img')), 10000);
+        await tipo_requerimento.click();
+    
+        const curso = await driver.wait(until.elementLocated(By.xpath('//*[@id="frm"]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr[2]/td[2]/table/tbody/tr[2]/td[2]/table/tbody/tr[1]/td/img')), 10000);
+        await curso.click();
+    
+        const data_inicio = await driver.wait(until.elementLocated(By.name('datainicio')), 10000);
+        await data_inicio.sendKeys('01122022');
+    
+        const data_fim = await driver.wait(until.elementLocated(By.name('datafinal')), 10000);
+        await data_fim.sendKeys('18022023');
+    
+        const departamento = await driver.wait(until.elementLocated(By.xpath('//*[@id="frm"]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr[4]/td[2]/table/tbody/tr[2]/td[2]/table/tbody/tr[1]/td/img')), 10000);
+        await departamento.click();
+    
+        const status = await driver.wait(until.elementLocated(By.xpath('//*[@id="frm"]/table/tbody/tr/td/table/tbody/tr[2]/td/table/tbody/tr[5]/td[2]/table/tbody/tr[2]/td[2]/table/tbody/tr[1]/td/img')), 10000);
+        await status.click();
+    
+        const gera_excell = await driver.wait(until.elementLocated(By.id('bt_excel')), 10000);
+        await gera_excell.click();
+        log_funcionalidade = 'tela de protocolo por departamento(gerar xls)';
+        log_resultado = 'Sucesso';
+        log_erro = ''
+    } catch (error) {
+        log_funcionalidade = 'tela de protocolo por departamento(gerar xls)';
+        log_resultado = 'Falha';
+        log_erro = 'Erro ao clicar no botao de gerar xls';
+    }
+    
+    escreverRelatorio(nome_formado, log_funcionalidade, log_resultado, log_erro);
 
 
+    driver.wait(() => {
+        const files = fs.readdirSync(downloadDir);
+        return files.some(file => file.endsWith('.xls')); // substitua '.pdf' pelo tipo de arquivo que você espera baixar
+    }, 70000);
+    
+    
+    setInterval(() => {
+        const downloadedFilePath = path.join(downloadDir, 'pro0001.xls'); // substitua 'arquivo-baixado.pdf' pelo nome do arquivo que você espera baixar
+        if (fs.existsSync(downloadedFilePath)) {
+           
+            log_funcionalidade = 'verificação de Download do xls';
+            log_resultado = 'Sucesso';
+            log_erro = ''
+        } else {
+            log_funcionalidade = 'verificação de Download do xls';
+            log_resultado = 'Falha';
+            log_erro = 'O arquivo não foi baixado.'
+            
+        }
+        escreverRelatorio(nome_formado, log_funcionalidade, log_resultado, log_erro);
+        
+    }, 60000);
+
+    setInterval(() => {
+        driver.quit();
+    }, 70000);
+    
+    
 }
 
 
+
+
+
+
 run();
+

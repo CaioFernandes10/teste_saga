@@ -21,13 +21,13 @@ async function runAreasConhecimento () {
     importsModel();
     //variaveis de tratamento de erro
     const log = geraLog();
-
+    
     //gera o nome
     let gerarNome = await gerarNomeDoc();
 
     //abreo browser e navega até o saga
     let driver = await abrirSAGA(new Builder());
-    
+
     //faz o login
     await login(driver, gerarNome);
     
@@ -43,14 +43,14 @@ async function runAreasConhecimento () {
         const areasConhecimento = await driver.wait(until.elementLocated(By.xpath('/html/body/table/tbody/tr[2]/td/form/table/tbody/tr/td[1]/ul/li[2]/ul/li[1]/a')), 5000);
         await areasConhecimento.click();
 
-        (await log).funcionalidade = 'Tela de Áreas de Conhecimento do Módulo de Estrutura Acadêmica';
-        (await log).resultado = 'Passou';
-        (await log).erro = '';
+       log.funcionalidade = 'Tela de Áreas de Conhecimento do Módulo de Estrutura Acadêmica';
+       log.resultado = 'Sucesso';
+       log.erro = '';
 
     } catch (error) {
-        (await log).funcionalidade = 'Tela de Áreas de Conhecimento do Módulo de Estrutura Acadêmica';
-        (await log).resultado = 'Não Passou';
-        (await log).erro = 'Erro ao clikar no botão de Áreas de Conhecimento';
+       log.funcionalidade = 'Tela de Áreas de Conhecimento do Módulo de Estrutura Acadêmica';
+       log.resultado = 'Falha';
+       log.erro = 'Erro ao clikar no botão de Áreas de Conhecimento';
     }
     await gerarArquivo(gerarNome, log);
     
@@ -60,16 +60,16 @@ async function runAreasConhecimento () {
         const botaoIncluir = await driver.findElement(By.xpath('//*[@id="T_principal"]/center/table/tbody/tr/td/table/tbody/tr[1]/td/table/tbody/tr/td[2]/a/img'))
         await botaoIncluir.click();
 
-        (await log).funcionalidade = 'Tela de inclusão da Áreas de Conhecimento do Módulo de Estrutura Acadêmica';
-        (await log).resultado = 'Passou';
-        (await log).erro = '';
+       log.funcionalidade = 'Tela de inclusão da Áreas de Conhecimento do Módulo de Estrutura Acadêmica';
+       log.resultado = 'Sucesso';
+       log.erro = '';
     } catch (error) {
-        (await log).funcionalidade = 'Tela de inclusão da Áreas de Conhecimento do Módulo de Estrutura Acadêmica';
-        (await log).resultado = 'Não Passou';
-        (await log).erro = 'Erro ao clikar no botão de incluir da Áreas de Conhecimento';
+       log.funcionalidade = 'Tela de inclusão da Áreas de Conhecimento do Módulo de Estrutura Acadêmica';
+       log.resultado = 'Falha';
+       log.erro = 'Erro ao clikar no botão de incluir da Áreas de Conhecimento';
     }
     await gerarArquivo(gerarNome, log);
- 
+    
     try {
         //incluir áres de conhecimento
         const codigo = await driver.findElement(By.name('label'));
@@ -86,14 +86,14 @@ async function runAreasConhecimento () {
         const confirmarinclusao = await driver.wait(until.elementLocated(By.name('ok')), 10000);
         await confirmarinclusao.click();
 
-        (await log).funcionalidade = 'Inclusão de Conhecimento';
-        (await log).resultado = 'Sucesso';
-        (await log).erro = '';
+       log.funcionalidade = 'Inclusão de Conhecimento';
+       log.resultado = 'Sucesso';
+       log.erro = '';
     } catch (error) {
         
-        (await log).funcionalidade = 'Inclusão de Conhecimento';
-        (await log).resultado = 'Falha';
-        (await log).erro = 'Erro ao incluir conhecimento';
+       log.funcionalidade = 'Inclusão de Conhecimento';
+       log.resultado = 'Falha';
+       log.erro = 'Erro ao incluir conhecimento';
     }
     await gerarArquivo(gerarNome, log);
 
@@ -125,14 +125,14 @@ async function runAreasConhecimento () {
         const confirmarinclusao = await driver.wait(until.elementLocated(By.name('ok')), 10000);
         await confirmarinclusao.click();
 
-        (await log).funcionalidade = 'Alteração de Conhecimento';
-        (await log).resultado = 'Sucesso';
-        (await log).erro = '';
+       log.funcionalidade = 'Alteração de Conhecimento';
+       log.resultado = 'Sucesso';
+       log.erro = '';
     } catch (error) {
         
-        (await log).funcionalidade = 'Alteração de Conhecimento';
-        (await log).resultado = 'Falha';
-        (await log).erro = 'Erro ao alterar conhecimento';
+       log.funcionalidade = 'Alteração de Conhecimento';
+       log.resultado = 'Falha';
+       log.erro = 'Erro ao alterar conhecimento';
     }
     await gerarArquivo(gerarNome, log);
 
@@ -155,13 +155,13 @@ async function runAreasConhecimento () {
         const registrarExclusao = await driver.wait(until.elementLocated(By.name('ok')), 10000);
         await registrarExclusao.click();
 
-        (await log).funcionalidade = 'Exclusão de Conhecimento';
-        (await log).resultado = 'Sucesso';
-        (await log).erro = '';
+       log.funcionalidade = 'Exclusão de Conhecimento';
+       log.resultado = 'Sucesso';
+       log.erro = '';
     } catch (error) {
-        (await log).funcionalidade = 'Exclusão de Conhecimento';
-        (await log).resultado = 'Falha';
-        (await log).erro = 'Erro ao excluir conhecimento';
+       log.funcionalidade = 'Exclusão de Conhecimento';
+       log.resultado = 'Falha';
+       log.erro = 'Erro ao excluir conhecimento';
     }
     await gerarArquivo(gerarNome, log);
 }

@@ -1,3 +1,5 @@
+const { Builder } = require('selenium-webdriver');
+
 function nome(){
     var dataAtual = new Date();
     var dia = dataAtual.getDate().toString().padStart(2, '0');
@@ -22,6 +24,9 @@ function escreverRelatorio(nome_formado,log_resultado,log_funcionalidade,log_err
             
          });
 }
+
+
+
 
 
 module.exports.nome = nome;
