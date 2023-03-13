@@ -3,7 +3,7 @@ var fs = require('fs');
 const geraLog = require('./gerarLog');
 const gerarArquivo = require('./gerarArquivo');
 
-async function login(driver, gerarNome){
+async function login(driver, gerarNome) {
     //variaveis de tratamento de erro
     const log = geraLog();
 
@@ -26,7 +26,7 @@ async function login(driver, gerarNome){
         (await log).resultado = 'Não Passou';
         (await log).erro = 'Erro ao acessar a tela de login';
     }
-    
+
     await gerarArquivo(gerarNome, log);
 
 }

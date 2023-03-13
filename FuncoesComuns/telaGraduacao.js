@@ -22,9 +22,6 @@ async function telaGraduacao(driver, gerarNome) {
         (await log).erro = 'Erro ao clikar no botao de Graduacao';
     }
     await gerarArquivo(gerarNome, log);
-    // fs.appendFile(gerarNome, (await log).resultado + ';' + (await log).funcionalidade + ';' + (await log).erro + ';\n', function (err) {
-    //     if (err) throw err;
-    // });
-  }
-  
-  module.exports = telaGraduacao;
+}
+
+module.exports = telaGraduacao;

@@ -1,4 +1,4 @@
-async function gerarLog(){
+async function gerarLog() {
     var log_funcionalidade = '';
     var log_resultado = '';
     var log_erro = 'erro';

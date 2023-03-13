@@ -1,4 +1,4 @@
-async function gerarNomeDoc(){
+async function gerarNomeDoc() {
     //formato da data atual, criar nome do arquivo csv
     var dataAtual = new Date();
     var dia = dataAtual.getDate().toString().padStart(2, '0');
