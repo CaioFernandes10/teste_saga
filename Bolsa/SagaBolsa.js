@@ -209,7 +209,7 @@ async function run() {
     escreverRelatorio(nome_formado, log_funcionalidade, log_resultado, log_erro);
 
     try {
-        //incluir modificadores de bolsas 
+        //incluir modificadores de bolsas
         const incluir_mod = await driver.findElement(By.xpath('//*[@id="frmGrid"]/table/tbody/tr[1]/td/table/tbody/tr/td[2]'));
         await incluir_mod.click();
 
