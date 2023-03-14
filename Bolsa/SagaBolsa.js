@@ -16,11 +16,13 @@ const { type } = require('os');
 let driver = chrome.Driver.createSession(options, service);
 
 async function run() {
+    const fileToDelete = 'pro0001.xls';
     const path = require('path');
     var fs = require('fs');
     var nome = require('../Funcoes/index.js').nome;
     var escreverRelatorio = require('../Funcoes/index.js').escreverRelatorio;
     var nome_formado = nome();
+   
     const downloadDir = '/home/caiofernandes/Downloads'; // diretório de download
     const chrome = require('selenium-webdriver/chrome');
     const options = new chrome.Options();
@@ -41,10 +43,13 @@ async function run() {
         await searchBar.sendKeys('1002562');
         await senha.sendKeys('123456');
         await senha.sendKeys(Key.ENTER);
+       
         log_funcionalidade = 'tela de login';
         log_resultado = 'Sucesso';
         log_erro = ''
     } catch (error) {
+        const screenshot = await driver.takeScreenshot();
+        require("fs").writeFileSync('teste.png.png', screenshot, "base64");
         log_funcionalidade = 'tela de login';
         log_resultado = 'Falhou1';
         log_erro = 'Erro ao acessar a tela de login';
@@ -59,12 +64,14 @@ async function run() {
         log_resultado = 'Sucesso';
         log_erro = ''
     } catch (error) {
+        const screenshot = await driver.takeScreenshot();
+        require("fs").writeFileSync('teste.png', screenshot, "base64");
         log_funcionalidade = 'tela de graduacao';
         log_resultado = 'Falhou1';
         log_erro = 'Erro ao clikar no botao de Graduacao';
     }
     escreverRelatorio(nome_formado, log_funcionalidade, log_resultado, log_erro);
-    
+
 
     try {
         //bolsa>cadastro>cadastro de motivos
@@ -81,6 +88,8 @@ async function run() {
         log_erro = ''
 
     } catch (error) {
+        const screenshot = await driver.takeScreenshot();
+        require("fs").writeFileSync('teste.png', screenshot, "base64");
         log_funcionalidade = 'Cadastro de motivos para bolsa';
         log_resultado = 'Falhou1';
         log_erro = 'Erro ao entrar na tela de Cadastro de motivos para bolsa';
@@ -100,11 +109,14 @@ async function run() {
         const desc = await driver.findElement(By.name('frm_descricao'));
         await desc.sendKeys('teste');
         await desc.sendKeys(Key.ENTER);
+        
         log_funcionalidade = 'Inclusão de motivos de bolsa';
         log_resultado = 'Sucesso';
         log_erro = ''
 
     } catch (error) {
+        const screenshot = await driver.takeScreenshot();
+        require("fs").writeFileSync('teste.png', screenshot, "base64");
         log_funcionalidade = 'Inclusão de motivos de bolsa';
         log_resultado = 'Falhou1';
         log_erro = 'Erro na tela de Inclusão de motivos de bolsa';
@@ -124,6 +136,8 @@ async function run() {
         log_resultado = 'Sucesso';
         log_erro = ''
     } catch (error) {
+        const screenshot = await driver.takeScreenshot();
+        require("fs").writeFileSync('teste.png', screenshot, "base64");
         log_funcionalidade = 'Pesquisa do elemento criado(Cadastro de motivos para bolsa)';
         log_resultado = 'Falhou1';
         log_erro = 'Erro na pesquisa';
@@ -152,6 +166,8 @@ async function run() {
         log_resultado = 'Sucesso';
         log_erro = ''
     } catch (error) {
+        const screenshot = await driver.takeScreenshot();
+        require("fs").writeFileSync('teste.png', screenshot, "base64");
         log_funcionalidade = 'alterar cadastro de motivo bolsa';
         log_resultado = 'Falhou';
         log_erro = 'Erro na tela de alterar cadastro de motivo bolsa'
@@ -181,6 +197,8 @@ async function run() {
         log_erro = ''
 
     } catch (error) {
+        const screenshot = await driver.takeScreenshot();
+        require("fs").writeFileSync('teste.png', screenshot, "base64");
         log_funcionalidade = 'excluir cadastro de motivo bolsa';
         log_resultado = 'Falhou';
         log_erro = 'Erro na tela de excluir cadastro de motivo bolsa'
@@ -202,6 +220,8 @@ async function run() {
         log_resultado = 'Sucesso';
         log_erro = ''
     } catch (error) {
+        const screenshot = await driver.takeScreenshot();
+        require("fs").writeFileSync('teste.png', screenshot, "base64");
         log_funcionalidade = 'Erro na tela de modificadores de bolsas';
         log_resultado = '';
         log_erro = 'Erro ao entrar na tela de modificadores de bolsas';
@@ -237,6 +257,8 @@ async function run() {
 
 
     } catch (error) {
+        const screenshot = await driver.takeScreenshot();
+        require("fs").writeFileSync('teste.png', screenshot, "base64");
         log_funcionalidade = 'inclusao modificadores de bolsas';
         log_resultado = '';
         log_erro = 'Erro ao entrar na tela de inclusao modificadores de bolsas'
@@ -275,6 +297,8 @@ async function run() {
         log_erro = '';
 
     } catch (error) {
+        const screenshot = await driver.takeScreenshot();
+        require("fs").writeFileSync('teste.png', screenshot, "base64");
         log_funcionalidade = 'alterar modificadores de bolsas';
         log_resultado = '';
         log_erro = 'Erro ao entrar na tela de alterar modificadores de bolsas'
@@ -299,6 +323,8 @@ async function run() {
         log_erro = '';
 
     } catch (error) {
+        const screenshot = await driver.takeScreenshot();
+        require("fs").writeFileSync('teste.png', screenshot, "base64");
         log_funcionalidade = 'excluir modificadores de bolsas';
         log_resultado = '';
         log_erro = 'Erro ao excluir modificadores de bolsas';
@@ -320,6 +346,8 @@ async function run() {
         log_resultado = 'Sucesso';
         log_erro = '';
     } catch (error) {
+        const screenshot = await driver.takeScreenshot();
+        require("fs").writeFileSync('teste.png', screenshot, "base64");
         log_funcionalidade = 'tela de parametros';
         log_resultado = '';
         log_erro = 'Erro ao entrar na tela de parametros';
@@ -345,6 +373,8 @@ async function run() {
         log_erro = '';
 
     } catch (error) {
+        const screenshot = await driver.takeScreenshot();
+        require("fs").writeFileSync('teste.png', screenshot, "base64");
         log_funcionalidade = 'tela de Tabela Percentual';
         log_resultado = '';
         log_erro = 'Erro ao entrar na tela de Tabela Percentual';
@@ -369,6 +399,8 @@ async function run() {
         await confirma_modal.click()
 
     } catch (error) {
+        const screenshot = await driver.takeScreenshot();
+        require("fs").writeFileSync('teste.png', screenshot, "base64");
         log_funcionalidade = 'tela de Tabela Percentual incluir';
         log_resultado = '';
         log_erro = 'Erro ao entrar na tela de Tabela Percentual';
@@ -398,6 +430,8 @@ async function run() {
         log_erro = '';
 
     } catch (error) {
+        const screenshot = await driver.takeScreenshot();
+        require("fs").writeFileSync('teste.png.png', screenshot, "base64");
         log_funcionalidade = 'tela de Tabela Percentual excluir';
         log_resultado = ' Falhou1';
         log_erro = 'Erro ao entrar na tela de Tabela Percentual excluir';
@@ -411,6 +445,8 @@ async function run() {
         log_resultado = 'Sucesso';
         log_erro = ''
     } catch (error) {
+        const screenshot = await driver.takeScreenshot();
+        require("fs").writeFileSync('teste.png', screenshot, "base64");
         log_funcionalidade = 'tela de protocolo por departamento';
         log_resultado = 'Falhou';
         log_erro = 'Erro ao clikar no botao de protocolo por departamento';
@@ -447,6 +483,8 @@ async function run() {
         log_resultado = 'Sucesso';
         log_erro = ''
     } catch (error) {
+        const screenshot = await driver.takeScreenshot();
+        require("fs").writeFileSync('teste.png', screenshot, "base64");
         log_funcionalidade = 'tela de protocolo por departamento(gerar xls)';
         log_resultado = 'Falha';
         log_erro = 'Erro ao clicar no botao de gerar xls';
@@ -469,18 +507,27 @@ async function run() {
             log_resultado = 'Sucesso';
             log_erro = ''
         } else {
+            
             log_funcionalidade = 'verificação de Download do xls';
             log_resultado = 'Falha';
             log_erro = 'O arquivo não foi baixado.'
             
         }
         escreverRelatorio(nome_formado, log_funcionalidade, log_resultado, log_erro);
+
+        const filePath = path.join(downloadDir, fileToDelete);
+        fs.unlink(filePath, (err) => {
+            if (err) throw err;
+            console.log(`${fileToDelete} excluído com sucesso!`);
+          });
         
     }, 60000);
 
     setInterval(() => {
+    
+
         driver.quit();
-    }, 70000);
+    }, 60000);
     
     
 }
